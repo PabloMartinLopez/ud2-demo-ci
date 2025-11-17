@@ -1,7 +1,7 @@
 // Importamos la librería Express
 const express = require('express');
 // Importamos nuestras funciones de la calculadora
-const { sumar, restar } = require('./calculadora');
+const { sumar, restar, multiplicar } = require('./calculadora');
 
 // Creamos la aplicación de Express
 const app = express();
@@ -39,6 +39,19 @@ app.get('/restar', (req, res) => {
   
   const resultado = restar(a, b);
   res.send(`El resultado de restar ${a} - ${b} es ${resultado}`);
+});
+
+// Definimos una ruta para multiplicacion
+app.get('/multiplicar', (req, res) => {
+  const a = parseFloat(req.query.a);
+  const b = parseFloat(req.query.b);
+
+  if (isNaN(a) || isNaN(b)) {
+    return res.status(400).send('Error: "a" y "b" deben ser números.');
+  }
+  
+  const resultado = multiplicar(a, b);
+  res.send(`El resultado de restar ${a} x ${b} es ${resultado}`);
 });
 
 // Ponemos el servidor a "escuchar" en el puerto definido
